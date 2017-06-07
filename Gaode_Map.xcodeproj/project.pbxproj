@@ -13,6 +13,7 @@
 		00F4BA081EE7DADB00E46522 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BA061EE7DADB00E46522 /* LaunchScreen.storyboard */; };
 		00F4BA131EE7DADC00E46522 /* Gaode_MapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA121EE7DADC00E46522 /* Gaode_MapTests.m */; };
 		00F4BA1E1EE7DADC00E46522 /* Gaode_MapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA1D1EE7DADC00E46522 /* Gaode_MapUITests.m */; };
+		00F4BA2E1EE7E12400E46522 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA2D1EE7E12400E46522 /* MapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		00F4BA191EE7DADC00E46522 /* Gaode_MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gaode_MapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00F4BA1D1EE7DADC00E46522 /* Gaode_MapUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Gaode_MapUITests.m; sourceTree = "<group>"; };
 		00F4BA1F1EE7DADC00E46522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00F4BA2C1EE7E12400E46522 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		00F4BA2D1EE7E12400E46522 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,7 @@
 		00F4B9FD1EE7DADB00E46522 /* Gaode_Map */ = {
 			isa = PBXGroup;
 			children = (
+				00F4BA2B1EE7E0FE00E46522 /* Gaode_Map */,
 				00F4BA011EE7DADB00E46522 /* AppDelegate.h */,
 				00F4BA021EE7DADB00E46522 /* AppDelegate.m */,
 				00F4BA041EE7DADB00E46522 /* Assets.xcassets */,
@@ -130,6 +134,15 @@
 				00F4BA1F1EE7DADC00E46522 /* Info.plist */,
 			);
 			path = Gaode_MapUITests;
+			sourceTree = "<group>";
+		};
+		00F4BA2B1EE7E0FE00E46522 /* Gaode_Map */ = {
+			isa = PBXGroup;
+			children = (
+				00F4BA2C1EE7E12400E46522 /* MapViewController.h */,
+				00F4BA2D1EE7E12400E46522 /* MapViewController.m */,
+			);
+			path = Gaode_Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00F4BA2E1EE7E12400E46522 /* MapViewController.m in Sources */,
 				00F4BA031EE7DADB00E46522 /* AppDelegate.m in Sources */,
 				00F4BA001EE7DADB00E46522 /* main.m in Sources */,
 			);
