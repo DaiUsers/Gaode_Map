@@ -18,13 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"123");
-    
-    NSLog(@"456");
-    
-    NSLog(@"789");
-    
-    NSLog(@"111");
 }
 
 - (void)didReceiveMemoryWarning {
