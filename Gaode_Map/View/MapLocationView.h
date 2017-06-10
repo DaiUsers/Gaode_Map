@@ -6,8 +6,17 @@
 //  Copyright © 2017年 admin. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MapModuleSuperView.h"
+#import <AMapSearchKit/AMapSearchKit.h>
 
-@interface MapLocationView : UIView
+typedef void(^RouteBlock)(AMapGeoPoint *);
+
+@interface MapLocationView : MapModuleSuperView
+
+@property (nonatomic, copy)RouteBlock block;
+
++ (instancetype)defaultView;
+
+- (void)setPointInfo:(AMapPOI *)poi;
 
 @end

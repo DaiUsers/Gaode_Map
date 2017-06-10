@@ -21,10 +21,12 @@
 
 - (void)setYt_Status:(ButtonStatus)yt_Status {
     _yt_Status = yt_Status;
-    [self setTitle:[NSString stringWithFormat:@"%ld",_yt_Status] forState:UIControlStateNormal];
+//    [self setTitle:[NSString stringWithFormat:@"%ld",_yt_Status] forState:UIControlStateNormal];
+    [self setImage:[UIImage imageNamed:[NSString stringWithFormat:@"mapB_%ld",_yt_Status]] forState:UIControlStateNormal];
 }
 
 - (void)addTarget:(id)target actionFirst:(SEL)action second:(SEL)actions third:(SEL)actiont forControlEvents:(UIControlEvents)controlEvents {
+    [self setAdjustsImageWhenHighlighted:NO];
     self.yt_Status = yt_Normal;
     self._yt_target = target;
     self._yt_actionFirst = action;

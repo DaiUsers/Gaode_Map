@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MapController.h"
+#import <AMapFoundationKit/AMapFoundationKit.h>
 
 @interface AppDelegate ()
 
@@ -17,8 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    
+    [[AMapServices sharedServices] setApiKey:@"b41055180611b1b5efd848a9b5c023f5"];
+
+    
+    MapController *mapController    = [[MapController alloc] init];
+    self.window.rootViewController  = mapController;
+    
+    self.window.backgroundColor     = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }

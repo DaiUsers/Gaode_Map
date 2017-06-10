@@ -7,13 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00F4BA001EE7DADB00E46522 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4B9FF1EE7DADB00E46522 /* main.m */; };
-		00F4BA031EE7DADB00E46522 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA021EE7DADB00E46522 /* AppDelegate.m */; };
-		00F4BA051EE7DADB00E46522 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BA041EE7DADB00E46522 /* Assets.xcassets */; };
-		00F4BA081EE7DADB00E46522 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BA061EE7DADB00E46522 /* LaunchScreen.storyboard */; };
 		00F4BA131EE7DADC00E46522 /* Gaode_MapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA121EE7DADC00E46522 /* Gaode_MapTests.m */; };
 		00F4BA1E1EE7DADC00E46522 /* Gaode_MapUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA1D1EE7DADC00E46522 /* Gaode_MapUITests.m */; };
-		00F4BA2E1EE7E12400E46522 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA2D1EE7E12400E46522 /* MapViewController.m */; };
+		00F4BA7D1EEA54FA00E46522 /* AMapFoundationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BA7A1EEA54F900E46522 /* AMapFoundationKit.framework */; };
+		00F4BA7E1EEA54FA00E46522 /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BA7B1EEA54F900E46522 /* AMapSearchKit.framework */; };
+		00F4BA7F1EEA54FA00E46522 /* MAMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BA7C1EEA54F900E46522 /* MAMapKit.framework */; };
+		00F4BA881EEA556200E46522 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA821EEA556200E46522 /* AppDelegate.m */; };
+		00F4BA891EEA556200E46522 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BA831EEA556200E46522 /* Assets.xcassets */; };
+		00F4BA8A1EEA556200E46522 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BA841EEA556200E46522 /* LaunchScreen.storyboard */; };
+		00F4BA8C1EEA556200E46522 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA871EEA556200E46522 /* main.m */; };
+		00F4BA901EEA556E00E46522 /* MapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA8F1EEA556E00E46522 /* MapController.m */; };
+		00F4BA981EEA557500E46522 /* MAAnnotationView+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA931EEA557500E46522 /* MAAnnotationView+Rotate.m */; };
+		00F4BA991EEA557500E46522 /* MapButtonBottom.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA951EEA557500E46522 /* MapButtonBottom.m */; };
+		00F4BA9A1EEA557500E46522 /* MapButtonTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BA971EEA557500E46522 /* MapButtonTop.m */; };
+		00F4BA9D1EEA562600E46522 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BA9C1EEA562600E46522 /* CoreTelephony.framework */; };
+		00F4BA9F1EEA562F00E46522 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BA9E1EEA562F00E46522 /* CoreLocation.framework */; };
+		00F4BAA11EEA563600E46522 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BAA01EEA563600E46522 /* Security.framework */; };
+		00F4BAA31EEA563C00E46522 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BAA21EEA563C00E46522 /* SystemConfiguration.framework */; };
+		00F4BAA51EEA564700E46522 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BAA41EEA564700E46522 /* libc++.tbd */; };
+		00F4BAA71EEA565600E46522 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BAA61EEA565600E46522 /* libz.tbd */; };
+		00F4BAA91EEA565D00E46522 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BAA81EEA565D00E46522 /* libstdc++.6.0.9.tbd */; };
+		00F4BAAB1EEA569C00E46522 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BAAA1EEA569C00E46522 /* AMap.bundle */; };
+		00F4BAAD1EEA56B500E46522 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F4BAAC1EEA56B500E46522 /* GLKit.framework */; };
+		00F4BAAF1EEA573300E46522 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00F4BAAE1EEA573300E46522 /* Info.plist */; };
+		00F4BAB41EEA838000E46522 /* MapSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BAB31EEA838000E46522 /* MapSettingView.m */; };
+		00F4BAB71EEA8DBF00E46522 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BAB61EEA8DBF00E46522 /* UIView+Frame.m */; };
+		00F4BABA1EEAB16900E46522 /* MapLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BAB91EEAB16900E46522 /* MapLocationView.m */; };
+		00F4BABD1EEBF1D000E46522 /* MapRouteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BABC1EEBF1D000E46522 /* MapRouteView.m */; };
+		00F4BAC01EEBF4F900E46522 /* MapModuleSuperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4BABF1EEBF4F900E46522 /* MapModuleSuperView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,20 +56,48 @@
 
 /* Begin PBXFileReference section */
 		00F4B9FB1EE7DADB00E46522 /* Gaode_Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaode_Map.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		00F4B9FF1EE7DADB00E46522 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		00F4BA011EE7DADB00E46522 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		00F4BA021EE7DADB00E46522 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		00F4BA041EE7DADB00E46522 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		00F4BA071EE7DADB00E46522 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		00F4BA091EE7DADB00E46522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00F4BA0E1EE7DADC00E46522 /* Gaode_MapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gaode_MapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00F4BA121EE7DADC00E46522 /* Gaode_MapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Gaode_MapTests.m; sourceTree = "<group>"; };
 		00F4BA141EE7DADC00E46522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00F4BA191EE7DADC00E46522 /* Gaode_MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gaode_MapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00F4BA1D1EE7DADC00E46522 /* Gaode_MapUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Gaode_MapUITests.m; sourceTree = "<group>"; };
 		00F4BA1F1EE7DADC00E46522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00F4BA2C1EE7E12400E46522 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
-		00F4BA2D1EE7E12400E46522 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		00F4BA7A1EEA54F900E46522 /* AMapFoundationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapFoundationKit.framework; sourceTree = "<group>"; };
+		00F4BA7B1EEA54F900E46522 /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
+		00F4BA7C1EEA54F900E46522 /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MAMapKit.framework; sourceTree = "<group>"; };
+		00F4BA811EEA556200E46522 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		00F4BA821EEA556200E46522 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		00F4BA831EEA556200E46522 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00F4BA851EEA556200E46522 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		00F4BA871EEA556200E46522 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		00F4BA8E1EEA556E00E46522 /* MapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapController.h; sourceTree = "<group>"; };
+		00F4BA8F1EEA556E00E46522 /* MapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapController.m; sourceTree = "<group>"; };
+		00F4BA921EEA557500E46522 /* MAAnnotationView+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAAnnotationView+Rotate.h"; sourceTree = "<group>"; };
+		00F4BA931EEA557500E46522 /* MAAnnotationView+Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MAAnnotationView+Rotate.m"; sourceTree = "<group>"; };
+		00F4BA941EEA557500E46522 /* MapButtonBottom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapButtonBottom.h; sourceTree = "<group>"; };
+		00F4BA951EEA557500E46522 /* MapButtonBottom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapButtonBottom.m; sourceTree = "<group>"; };
+		00F4BA961EEA557500E46522 /* MapButtonTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapButtonTop.h; sourceTree = "<group>"; };
+		00F4BA971EEA557500E46522 /* MapButtonTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapButtonTop.m; sourceTree = "<group>"; };
+		00F4BA9C1EEA562600E46522 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		00F4BA9E1EEA562F00E46522 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		00F4BAA01EEA563600E46522 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		00F4BAA21EEA563C00E46522 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		00F4BAA41EEA564700E46522 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		00F4BAA61EEA565600E46522 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		00F4BAA81EEA565D00E46522 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		00F4BAAA1EEA569C00E46522 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = MAMapKit.framework/AMap.bundle; sourceTree = "<group>"; };
+		00F4BAAC1EEA56B500E46522 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		00F4BAAE1EEA573300E46522 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		00F4BAB21EEA838000E46522 /* MapSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapSettingView.h; sourceTree = "<group>"; };
+		00F4BAB31EEA838000E46522 /* MapSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapSettingView.m; sourceTree = "<group>"; };
+		00F4BAB51EEA8DBF00E46522 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		00F4BAB61EEA8DBF00E46522 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
+		00F4BAB81EEAB16900E46522 /* MapLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLocationView.h; sourceTree = "<group>"; };
+		00F4BAB91EEAB16900E46522 /* MapLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapLocationView.m; sourceTree = "<group>"; };
+		00F4BABB1EEBF1D000E46522 /* MapRouteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapRouteView.h; sourceTree = "<group>"; };
+		00F4BABC1EEBF1D000E46522 /* MapRouteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapRouteView.m; sourceTree = "<group>"; };
+		00F4BABE1EEBF4F800E46522 /* MapModuleSuperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapModuleSuperView.h; sourceTree = "<group>"; };
+		00F4BABF1EEBF4F900E46522 /* MapModuleSuperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapModuleSuperView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +105,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00F4BAAD1EEA56B500E46522 /* GLKit.framework in Frameworks */,
+				00F4BAA91EEA565D00E46522 /* libstdc++.6.0.9.tbd in Frameworks */,
+				00F4BAA71EEA565600E46522 /* libz.tbd in Frameworks */,
+				00F4BAA51EEA564700E46522 /* libc++.tbd in Frameworks */,
+				00F4BAA31EEA563C00E46522 /* SystemConfiguration.framework in Frameworks */,
+				00F4BAA11EEA563600E46522 /* Security.framework in Frameworks */,
+				00F4BA9F1EEA562F00E46522 /* CoreLocation.framework in Frameworks */,
+				00F4BA9D1EEA562600E46522 /* CoreTelephony.framework in Frameworks */,
+				00F4BA7F1EEA54FA00E46522 /* MAMapKit.framework in Frameworks */,
+				00F4BA7E1EEA54FA00E46522 /* AMapSearchKit.framework in Frameworks */,
+				00F4BA7D1EEA54FA00E46522 /* AMapFoundationKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +143,8 @@
 				00F4BA111EE7DADC00E46522 /* Gaode_MapTests */,
 				00F4BA1C1EE7DADC00E46522 /* Gaode_MapUITests */,
 				00F4B9FC1EE7DADB00E46522 /* Products */,
+				00F4BA791EEA54F900E46522 /* MapKit */,
+				00F4BA9B1EEA562600E46522 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,23 +161,11 @@
 		00F4B9FD1EE7DADB00E46522 /* Gaode_Map */ = {
 			isa = PBXGroup;
 			children = (
-				00F4BA2B1EE7E0FE00E46522 /* Gaode_Map */,
-				00F4BA011EE7DADB00E46522 /* AppDelegate.h */,
-				00F4BA021EE7DADB00E46522 /* AppDelegate.m */,
-				00F4BA041EE7DADB00E46522 /* Assets.xcassets */,
-				00F4BA061EE7DADB00E46522 /* LaunchScreen.storyboard */,
-				00F4BA091EE7DADB00E46522 /* Info.plist */,
-				00F4B9FE1EE7DADB00E46522 /* Supporting Files */,
+				00F4BA911EEA557500E46522 /* View */,
+				00F4BA8D1EEA556E00E46522 /* Controller */,
+				00F4BA801EEA556200E46522 /* Other */,
 			);
 			path = Gaode_Map;
-			sourceTree = "<group>";
-		};
-		00F4B9FE1EE7DADB00E46522 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				00F4B9FF1EE7DADB00E46522 /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		00F4BA111EE7DADC00E46522 /* Gaode_MapTests */ = {
@@ -136,13 +186,75 @@
 			path = Gaode_MapUITests;
 			sourceTree = "<group>";
 		};
-		00F4BA2B1EE7E0FE00E46522 /* Gaode_Map */ = {
+		00F4BA791EEA54F900E46522 /* MapKit */ = {
 			isa = PBXGroup;
 			children = (
-				00F4BA2C1EE7E12400E46522 /* MapViewController.h */,
-				00F4BA2D1EE7E12400E46522 /* MapViewController.m */,
+				00F4BAAA1EEA569C00E46522 /* AMap.bundle */,
+				00F4BA7A1EEA54F900E46522 /* AMapFoundationKit.framework */,
+				00F4BA7B1EEA54F900E46522 /* AMapSearchKit.framework */,
+				00F4BA7C1EEA54F900E46522 /* MAMapKit.framework */,
 			);
-			path = Gaode_Map;
+			path = MapKit;
+			sourceTree = "<group>";
+		};
+		00F4BA801EEA556200E46522 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				00F4BAB51EEA8DBF00E46522 /* UIView+Frame.h */,
+				00F4BAB61EEA8DBF00E46522 /* UIView+Frame.m */,
+				00F4BA811EEA556200E46522 /* AppDelegate.h */,
+				00F4BA821EEA556200E46522 /* AppDelegate.m */,
+				00F4BA831EEA556200E46522 /* Assets.xcassets */,
+				00F4BA841EEA556200E46522 /* LaunchScreen.storyboard */,
+				00F4BA871EEA556200E46522 /* main.m */,
+				00F4BAAE1EEA573300E46522 /* Info.plist */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		00F4BA8D1EEA556E00E46522 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				00F4BA8E1EEA556E00E46522 /* MapController.h */,
+				00F4BA8F1EEA556E00E46522 /* MapController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		00F4BA911EEA557500E46522 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				00F4BA921EEA557500E46522 /* MAAnnotationView+Rotate.h */,
+				00F4BA931EEA557500E46522 /* MAAnnotationView+Rotate.m */,
+				00F4BA941EEA557500E46522 /* MapButtonBottom.h */,
+				00F4BA951EEA557500E46522 /* MapButtonBottom.m */,
+				00F4BA961EEA557500E46522 /* MapButtonTop.h */,
+				00F4BA971EEA557500E46522 /* MapButtonTop.m */,
+				00F4BAB21EEA838000E46522 /* MapSettingView.h */,
+				00F4BAB31EEA838000E46522 /* MapSettingView.m */,
+				00F4BABE1EEBF4F800E46522 /* MapModuleSuperView.h */,
+				00F4BABF1EEBF4F900E46522 /* MapModuleSuperView.m */,
+				00F4BAB81EEAB16900E46522 /* MapLocationView.h */,
+				00F4BAB91EEAB16900E46522 /* MapLocationView.m */,
+				00F4BABB1EEBF1D000E46522 /* MapRouteView.h */,
+				00F4BABC1EEBF1D000E46522 /* MapRouteView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		00F4BA9B1EEA562600E46522 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00F4BAAC1EEA56B500E46522 /* GLKit.framework */,
+				00F4BAA81EEA565D00E46522 /* libstdc++.6.0.9.tbd */,
+				00F4BAA61EEA565600E46522 /* libz.tbd */,
+				00F4BAA41EEA564700E46522 /* libc++.tbd */,
+				00F4BAA21EEA563C00E46522 /* SystemConfiguration.framework */,
+				00F4BAA01EEA563600E46522 /* Security.framework */,
+				00F4BA9E1EEA562F00E46522 /* CoreLocation.framework */,
+				00F4BA9C1EEA562600E46522 /* CoreTelephony.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,8 +366,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00F4BA051EE7DADB00E46522 /* Assets.xcassets in Resources */,
-				00F4BA081EE7DADB00E46522 /* LaunchScreen.storyboard in Resources */,
+				00F4BAAF1EEA573300E46522 /* Info.plist in Resources */,
+				00F4BA891EEA556200E46522 /* Assets.xcassets in Resources */,
+				00F4BA8A1EEA556200E46522 /* LaunchScreen.storyboard in Resources */,
+				00F4BAAB1EEA569C00E46522 /* AMap.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,9 +394,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00F4BA2E1EE7E12400E46522 /* MapViewController.m in Sources */,
-				00F4BA031EE7DADB00E46522 /* AppDelegate.m in Sources */,
-				00F4BA001EE7DADB00E46522 /* main.m in Sources */,
+				00F4BAB71EEA8DBF00E46522 /* UIView+Frame.m in Sources */,
+				00F4BABD1EEBF1D000E46522 /* MapRouteView.m in Sources */,
+				00F4BA991EEA557500E46522 /* MapButtonBottom.m in Sources */,
+				00F4BA8C1EEA556200E46522 /* main.m in Sources */,
+				00F4BA9A1EEA557500E46522 /* MapButtonTop.m in Sources */,
+				00F4BA901EEA556E00E46522 /* MapController.m in Sources */,
+				00F4BA981EEA557500E46522 /* MAAnnotationView+Rotate.m in Sources */,
+				00F4BAB41EEA838000E46522 /* MapSettingView.m in Sources */,
+				00F4BABA1EEAB16900E46522 /* MapLocationView.m in Sources */,
+				00F4BAC01EEBF4F900E46522 /* MapModuleSuperView.m in Sources */,
+				00F4BA881EEA556200E46522 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,10 +440,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		00F4BA061EE7DADB00E46522 /* LaunchScreen.storyboard */ = {
+		00F4BA841EEA556200E46522 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				00F4BA071EE7DADB00E46522 /* Base */,
+				00F4BA851EEA556200E46522 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -424,6 +546,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NNWZA9N69A;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MapKit",
+				);
 				INFOPLIST_FILE = Gaode_Map/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wheng.Gaode-Map";
@@ -436,6 +562,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NNWZA9N69A;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MapKit",
+				);
 				INFOPLIST_FILE = Gaode_Map/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wheng.Gaode-Map";
@@ -512,6 +642,7 @@
 				00F4BA241EE7DADC00E46522 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00F4BA251EE7DADC00E46522 /* Build configuration list for PBXNativeTarget "Gaode_MapTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +651,7 @@
 				00F4BA271EE7DADC00E46522 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00F4BA281EE7DADC00E46522 /* Build configuration list for PBXNativeTarget "Gaode_MapUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +660,7 @@
 				00F4BA2A1EE7DADC00E46522 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

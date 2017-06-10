@@ -191,6 +191,7 @@ typedef NS_ENUM(NSInteger, AMapNearbySearchType)
 @property (nonatomic, assign) NSInteger     radius;
 ///指定返回结果poi数组中的POI类型，在requireExtension=YES时生效。输入为typecode, 支持传入多个typecode, 多值时用“|”分割
 @property (nonatomic, copy) NSString *poitype;
+
 @end
 
 ///逆地理编码返回

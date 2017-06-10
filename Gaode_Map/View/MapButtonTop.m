@@ -10,10 +10,16 @@
 
 @implementation MapButtonTop
 
-//- (instancetype)initWithFrame:(CGRect)frame {
-//    self = [super initWithFrame:frame];
-//    return self;
-//}
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setImage:[UIImage imageNamed:@"mapT"] forState:UIControlStateNormal];
+        [self setAdjustsImageWhenHighlighted:NO];
+    }
+    return self;
+}
+
+
 
 - (void)drawRect:(CGRect)rect {
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8, 8)];

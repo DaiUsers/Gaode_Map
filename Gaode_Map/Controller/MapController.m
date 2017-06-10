@@ -18,6 +18,9 @@
 #import "MapButtonBottom.h"
 #import "MAAnnotationView+Rotate.h"
 
+#import "MapSettingView.h"
+#import "MapLocationView.h"
+
 @interface MapController ()<MAMapViewDelegate,AMapSearchDelegate>
 
 @property (nonatomic, strong)MAMapView *mapView;
@@ -25,6 +28,10 @@
 @property (nonatomic, strong)MAUserLocationRepresentation *r;
 
 @property (nonatomic, strong)MapButtonBottom *bottom;
+@property (nonatomic, strong)MapButtonTop    *top;
+
+//点击地图标注点弹出视图
+@property (nonatomic, strong)MapLocationView *touchView;
 
 @property (nonatomic, strong)UIVisualEffectView *searchEffectView;
 
@@ -47,6 +54,7 @@
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
     [effectView setFrame:CGRectMake(0, 0, ScreenWidth, 20)];
     [self.view addSubview:effectView];
+    
 }
 
 - (void)createMapTapGesture {
@@ -57,34 +65,35 @@
     UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapTapAction:)];
     [self.mapView addGestureRecognizer:mapTap];
 }
-
+//创建地图
 - (void)createMapView {
     
     [[AMapServices sharedServices] setEnableHTTPS:YES];
     self.mapView = [[MAMapView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.mapView];
     
+
+    
+    //
+    [self.mapView setShowTraffic:YES];
     [self.mapView setZoomLevel:15.f animated:YES];
     [self.mapView setShowsUserLocation:YES];
-    [self.mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
-    
-    self.r = [[MAUserLocationRepresentation alloc] init];
-    self.r.showsHeadingIndicator = YES;
-    self.r.image = [UIImage imageNamed:@"arrow"];
-
-    [self.mapView updateUserLocationRepresentation:self.r];
-    
     [self.mapView setDelegate:self];
-    [self.mapView setScaleOrigin:CGPointMake(20, 20)];
-    [self.mapView setShowsScale:NO];
     
-    [self.mapView setShowsCompass:NO];
-    [self.mapView setCompassOrigin:CGPointMake(ScreenWidth - 45, 120)];
+    [self setMapStatusButton];
+    [self setMapUserLocationRepresentation];
+    [self setMapScale];
+    [self setMapCompass];
     
-    MapButtonTop *top = [[MapButtonTop alloc] initWithFrame:CGRectMake(ScreenWidth - 50, 30,42 , 42)];
-    [self.view addSubview:top];
-    [top addTarget:self action:@selector(topButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    top.backgroundColor = [UIColor redColor];
+    //
+//    [self.mapView addSubview:self.touchView];
+}
+//设置地图状态按钮
+- (void)setMapStatusButton {
+    self.top = [[MapButtonTop alloc] initWithFrame:CGRectMake(ScreenWidth - 50, 30,42 , 42)];
+    [self.view addSubview:self.top];
+    [self.top addTarget:self action:@selector(topButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    self.top.backgroundColor = [UIColor redColor];
     
     
     self.bottom = [[MapButtonBottom alloc] initWithFrame:CGRectMake(ScreenWidth - 50, 72, 42, 42)];
@@ -95,35 +104,109 @@
     [self.bottom setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 }
 
+//设置定位蓝点
+- (void)setMapUserLocationRepresentation {
+    [self.mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
+    
+    self.r = [[MAUserLocationRepresentation alloc] init];
+    self.r.showsHeadingIndicator = YES;
+    self.r.image = [UIImage imageNamed:@"arrow"];
+    
+    [self.mapView updateUserLocationRepresentation:self.r];
+}
+//设置比例尺
+- (void)setMapScale {
+    [self.mapView setScaleOrigin:CGPointMake(20, 20)];
+    [self.mapView setShowsScale:NO];
+}
+//设置指南针
+- (void)setMapCompass {
+    [self.mapView setShowsCompass:NO];
+    [self.mapView setCompassOrigin:CGPointMake(ScreenWidth - 45, 120)];
+}
+
+#pragma mark ------ MapStatusButton_ACTION
+
 - (void)bottomFirstAction {
-    NSLog(@"first");
-    [self.mapView setZoomLevel:15.f animated:YES];
+    if (self.mapView.zoomLevel < 15.f) {
+         [self.mapView setZoomLevel:15.f animated:YES];
+    }
+    [self.mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
     self.bottom.yt_Status = yt_SelfLocation;
 }
 
 - (void)bottomSecondAction {
-    NSLog(@"second");
+    [self.mapView setUserTrackingMode:MAUserTrackingModeFollowWithHeading animated:YES];
+    self.bottom.yt_Status = yt_Compass;
 }
 
 - (void)bottomThirdAction {
-    NSLog(@"third");
+    [self.mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
+    self.bottom.yt_Status = yt_Normal;
 }
 
 - (void)topButtonAction {
-    NSLog(@"top");
-    AMapRidingRouteSearchRequest *ridingSearch = [[AMapRidingRouteSearchRequest alloc] init];
-    ridingSearch.origin = [AMapGeoPoint locationWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
-    ridingSearch.destination = self.destination;
-    [self.searchAPI AMapRidingRouteSearch:ridingSearch];
+    
+    MapSettingView *settingsView = [MapSettingView shareManager];
+    __block typeof(self)weakSelf = self;
+    
+    [settingsView showMapViewSettingsHandler:^{
+        [weakSelf.top       setAlpha:0.f];
+        [weakSelf.bottom    setAlpha:0.f];
+        
+    }];
+    
+    settingsView.trafficBlock = ^(BOOL value) {
+        [weakSelf.mapView setShowTraffic:value];
+    };
+    
+    settingsView.settingHideBlock = ^() {
+        [weakSelf.top       setAlpha:1.f];
+        [weakSelf.bottom    setAlpha:1.f];
+    };
+    settingsView.block = ^(NSInteger index) {
+        switch (index) {
+            case 0: {
+                [weakSelf.mapView setMapType:MAMapTypeStandard];
+            }
+                break;
+            case 1: {
+                [weakSelf.mapView setMapType:MAMapTypeBus];
+            }
+                break;
+                
+            case 2: {
+                [weakSelf.mapView setMapType:MAMapTypeSatellite];
+            }
+                break;
+            default:
+                break;
+        }
+    };
+    
+    
 }
 
+//地图点击响应
 - (void)mapTapAction:(UIGestureRecognizer *)gestureRecognizer {
+    self.touchView = [MapLocationView defaultView];
+    __block typeof(self)weakSelf = self;
+    self.touchView.block = ^(AMapGeoPoint *destination) {
+        AMapRidingRouteSearchRequest *ridingSearch = [[AMapRidingRouteSearchRequest alloc] init];
+        ridingSearch.origin = [AMapGeoPoint locationWithLatitude:weakSelf.mapView.userLocation.coordinate.latitude longitude:weakSelf.mapView.userLocation.coordinate.longitude];
+        ridingSearch.destination = destination;
+        [weakSelf.searchAPI AMapRidingRouteSearch:ridingSearch];
+    };
+
+    
     CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
     CLLocationCoordinate2D touchMapCorrdinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
 
     AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
     regeo.location = [AMapGeoPoint locationWithLatitude:touchMapCorrdinate.latitude longitude:touchMapCorrdinate.longitude];
+    regeo.requireExtension = YES;
+    //地理查找
     [self.searchAPI AMapReGoecodeSearch:regeo];
     
     //终点
@@ -170,10 +253,6 @@
         }
         [self.mapView addOverlays:overlayArray];
 //    }
-    
-   
-    
-   
 }
 
 - (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id<MAOverlay>)overlay {
@@ -183,7 +262,8 @@
         polylineRenderer.lineWidth   = 5.f;
         polylineRenderer.lineJoinType = kMALineJoinRound;
         polylineRenderer.lineCapType  = kMALineCapRound;
-        NSLog(@"123456789");
+        
+        
         
         return polylineRenderer;
     }
@@ -198,29 +278,30 @@
 
 /* 逆地理编码回调. */
 - (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response {
-//    NSLog(@"%@",response.regeocode.formattedDescription);
-    if (response.regeocode != nil) {
-        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(request.location.latitude, request.location.longitude);
-        //添加一根针
-        
-        
-        MAPointAnnotation *annotationPoint = [[MAPointAnnotation alloc] init];
-        
-        [annotationPoint setCoordinate:coordinate];
-        
-        
-        annotationPoint.subtitle = response.regeocode.formattedAddress;
-        
-//        [self.mapView removeAnnotations:self.mapView.annotations];
-        [self.mapView removeOverlays:self.mapView.overlays];
-        
-        [self.mapView addAnnotation:annotationPoint];
 
-        [self.mapView selectAnnotation:annotationPoint animated:YES];
+    if (response.regeocode != nil) {
+        //
+        //pois
+        NSArray *poisArray = response.regeocode.pois;
         
+        if (poisArray.count > 0) {
+            AMapPOI *poi = [poisArray firstObject];
+            MAPointAnnotation *annotation = [[MAPointAnnotation alloc] init];
+            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(poi.location.latitude, poi.location.longitude);
+
+            [annotation setCoordinate:coordinate];
+            [annotation setTitle:poi.name];
+            [self.mapView removeOverlays:self.mapView.overlays];
+            [self.mapView addAnnotation:annotation];
+            [self.mapView selectAnnotation:annotation animated:YES];
+            
+            [self.touchView showMapLocationView];
+            [self.touchView setPointInfo:poi];
+        }
     }
 }
 #pragma mark ------ MAPVIEW_DELEGATE
+
 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation {
     CLHeading *heading = userLocation.heading;
@@ -231,17 +312,20 @@
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
+//    NSLog(@"%@",annotation);
+//    return nil;
     
     if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
         static NSString *pointReuseIndentifier = @"pointReuseIndentifier";
-        MAPinAnnotationView*annotationView = (MAPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndentifier];
+        MAAnnotationView*annotationView = (MAPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndentifier];
         if (annotationView == nil) {
-            annotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndentifier];
+            
+            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndentifier];
         }
         annotationView.canShowCallout= YES;       //设置气泡可以弹出，默认为NO
-        annotationView.animatesDrop = YES;        //设置标注动画显示，默认为NO
-        annotationView.draggable = YES;        //设置标注可以拖动，默认为NO
-        annotationView.pinColor = MAPinAnnotationColorPurple;
+//        annotationView.animatesDrop = YES;        //设置标注动画显示，默认为NO
+//        annotationView.draggable = YES;        //设置标注可以拖动，默认为NO
+//        annotationView.pinColor = MAPinAnnotationColorPurple;
         
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         
