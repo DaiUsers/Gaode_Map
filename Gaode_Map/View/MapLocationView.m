@@ -10,7 +10,7 @@
 
 @interface MapLocationView ()
 
-@property (nonatomic, strong)AMapGeoPoint *geo;
+@property (nonatomic, strong)AMapReGeocode *destinationRegeo;
 @property (nonatomic, strong)UIButton *wayButton;
 
 @end
@@ -41,12 +41,15 @@
 }
 
 #pragma mark Func
-
-- (void)setPointInfo:(AMapPOI *)poi {
+//添加标注信息
+- (void)setPointInfo:(AMapReGeocode *)regeo {
+    self.destinationRegeo = regeo;
+    
+    AMapPOI *poi = [regeo.pois firstObject];
+    
     [self.titleLabel setText:poi.name];
     NSString *detail = [[poi.type componentsSeparatedByString:@";"] lastObject];
     [self.detailLabel setText:detail];
-    self.geo = [AMapGeoPoint locationWithLatitude:poi.location.latitude longitude:poi.location.longitude];
 }
 
 #pragma mark ACTION
@@ -54,7 +57,7 @@
 //路线按钮
 - (void)wayButtonAction:(UIButton *)sender {
     if (self.block) {
-        self.block(self.geo);
+        self.block(self.destinationRegeo);
     }
 }
 

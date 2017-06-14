@@ -20,25 +20,31 @@
 
 #import "MapSettingView.h"
 #import "MapLocationView.h"
+#import "MapRouteView.h"
 
 @interface MapController ()<MAMapViewDelegate,AMapSearchDelegate>
 
 @property (nonatomic, strong)MAMapView *mapView;
 @property (nonatomic, strong)AMapSearchAPI *searchAPI;
+//定位蓝点
 @property (nonatomic, strong)MAUserLocationRepresentation *r;
 
 @property (nonatomic, strong)MapButtonBottom *bottom;
 @property (nonatomic, strong)MapButtonTop    *top;
 
-//点击地图标注点弹出视图
+//点击地图标注点弹出视图（标注点信息）
 @property (nonatomic, strong)MapLocationView *touchView;
+//路线规划view
+@property (nonatomic, strong)MapRouteView    *routeView;
 
 @property (nonatomic, strong)UIVisualEffectView *searchEffectView;
 
 @property (nonatomic, strong)UITableView *tableView;
 
-@property (nonatomic, strong)AMapGeoPoint *origin;
-@property (nonatomic, strong)AMapGeoPoint *destination;
+//@property (nonatomic, strong)AMapGeoPoint *origin;
+//@property (nonatomic, strong)AMapGeoPoint *destination;
+
+@property (nonatomic, assign)BOOL isBus;
 
 @end
 
@@ -48,15 +54,16 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createMapView];
+    //添加地图点击响应
     [self createMapTapGesture];
-    
+    //状态栏模糊
     UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
     [effectView setFrame:CGRectMake(0, 0, ScreenWidth, 20)];
     [self.view addSubview:effectView];
     
 }
-
+//添加地图点击响应
 - (void)createMapTapGesture {
     
     self.searchAPI = [[AMapSearchAPI alloc] init];
@@ -71,37 +78,31 @@
     [[AMapServices sharedServices] setEnableHTTPS:YES];
     self.mapView = [[MAMapView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.mapView];
-    
-
-    
-    //
+    ///交通状况
     [self.mapView setShowTraffic:YES];
+    ///地图比例大小
     [self.mapView setZoomLevel:15.f animated:YES];
+    ///当前位置
     [self.mapView setShowsUserLocation:YES];
     [self.mapView setDelegate:self];
-    
+    ///设置地图状态按钮
     [self setMapStatusButton];
+    ///当前位置标注
     [self setMapUserLocationRepresentation];
+    ///比例尺
     [self setMapScale];
+    ///指南针
     [self setMapCompass];
-    
-    //
-//    [self.mapView addSubview:self.touchView];
 }
-//设置地图状态按钮
+//设置地图状态按钮 (右上角两个按钮)
 - (void)setMapStatusButton {
     self.top = [[MapButtonTop alloc] initWithFrame:CGRectMake(ScreenWidth - 50, 30,42 , 42)];
     [self.view addSubview:self.top];
     [self.top addTarget:self action:@selector(topButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    self.top.backgroundColor = [UIColor redColor];
-    
     
     self.bottom = [[MapButtonBottom alloc] initWithFrame:CGRectMake(ScreenWidth - 50, 72, 42, 42)];
     [self.view addSubview:self.bottom];
     [self.bottom addTarget:self actionFirst:@selector(bottomFirstAction) second:@selector(bottomSecondAction) third:@selector(bottomThirdAction) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottom setBackgroundColor:[UIColor whiteColor]];
-    [self.bottom setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 }
 
 //设置定位蓝点
@@ -154,7 +155,6 @@
     [settingsView showMapViewSettingsHandler:^{
         [weakSelf.top       setAlpha:0.f];
         [weakSelf.bottom    setAlpha:0.f];
-        
     }];
     
     settingsView.trafficBlock = ^(BOOL value) {
@@ -184,19 +184,79 @@
                 break;
         }
     };
-    
-    
 }
 
 //地图点击响应
 - (void)mapTapAction:(UIGestureRecognizer *)gestureRecognizer {
+    
+#pragma mark locationView
+    
     self.touchView = [MapLocationView defaultView];
+    self.routeView = [MapRouteView defaultView];
+    
+    [self.touchView showMapLocationView];
+    [self.routeView dismissMapLocationView];
+
     __block typeof(self)weakSelf = self;
-    self.touchView.block = ^(AMapGeoPoint *destination) {
-        AMapRidingRouteSearchRequest *ridingSearch = [[AMapRidingRouteSearchRequest alloc] init];
-        ridingSearch.origin = [AMapGeoPoint locationWithLatitude:weakSelf.mapView.userLocation.coordinate.latitude longitude:weakSelf.mapView.userLocation.coordinate.longitude];
-        ridingSearch.destination = destination;
-        [weakSelf.searchAPI AMapRidingRouteSearch:ridingSearch];
+    //路线Action
+    self.touchView.block = ^(AMapReGeocode *regeo) {
+
+#pragma mark RouteView
+        AMapPOI *poi = regeo.pois.firstObject;
+        [weakSelf.routeView setPointInfo:poi];
+        
+        //起始点
+        AMapGeoPoint *origin      = [AMapGeoPoint locationWithLatitude:weakSelf.mapView.userLocation.coordinate.latitude longitude:weakSelf.mapView.userLocation.coordinate.longitude];
+        //终点
+        AMapGeoPoint *destination = [AMapGeoPoint locationWithLatitude:poi.location.latitude longitude:poi.location.longitude];
+        
+        __block typeof(weakSelf)awSelf = weakSelf;
+        weakSelf.routeView.block = ^(NSInteger typeIndex) {
+            [awSelf.routeView removeRouteSubView];
+            
+            if (typeIndex == 0) {//驾车
+                [awSelf setIsBus:NO];
+                AMapDrivingRouteSearchRequest *drivingRoute = [[AMapDrivingRouteSearchRequest alloc] init];
+                [drivingRoute setOrigin:origin];
+                [drivingRoute setDestination:destination];
+                [drivingRoute setRequireExtension:YES];
+                [awSelf.searchAPI AMapDrivingRouteSearch:drivingRoute];
+            } else if (typeIndex == 1){//步行
+                [awSelf setIsBus:NO];
+                AMapWalkingRouteSearchRequest *walkingSearch = [[AMapWalkingRouteSearchRequest alloc] init];
+                [walkingSearch setOrigin:origin];
+                [walkingSearch setDestination:destination];
+                [awSelf.searchAPI AMapWalkingRouteSearch:walkingSearch];
+            } else if (typeIndex == 2) {
+                [awSelf setIsBus:YES];//公交路线
+                AMapTransitRouteSearchRequest *busSearch = [[AMapTransitRouteSearchRequest alloc] init];
+                
+                [busSearch setOrigin:origin];
+                [busSearch setDestination:destination];
+                [busSearch setRequireExtension:YES];
+                //最少步行
+                [busSearch setStrategy:3];
+                [busSearch setCity:regeo.addressComponent.city];
+                [busSearch setDestinationCity:regeo.addressComponent.city];
+                [awSelf.searchAPI AMapTransitRouteSearch:busSearch];
+            } else if (typeIndex == 3) {
+                awSelf.isBus = NO;
+
+            }
+            
+        };
+        
+        awSelf.isBus = NO;
+
+        [weakSelf.routeView showMapLocationView];
+        [weakSelf.touchView dismissMapLocationView];
+        
+        //default route type (driving)
+        AMapDrivingRouteSearchRequest *drivingRoute = [[AMapDrivingRouteSearchRequest alloc] init];
+        [drivingRoute setRequireExtension:YES];
+        [drivingRoute setOrigin:origin];
+        [drivingRoute setDestination:destination];
+        [weakSelf.searchAPI AMapDrivingRouteSearch:drivingRoute];
     };
 
     
@@ -208,72 +268,90 @@
     regeo.requireExtension = YES;
     //地理查找
     [self.searchAPI AMapReGoecodeSearch:regeo];
-    
-    //终点
-    self.destination = [AMapGeoPoint locationWithLatitude:touchMapCorrdinate.latitude longitude:touchMapCorrdinate.longitude];
 }
 
 #pragma mark ------ Search_DELEGATE
 
 - (void)onRouteSearchDone:(AMapRouteSearchBaseRequest *)request response:(AMapRouteSearchResponse *)response {
+    //路线查找结果，先移除之前的路线规划（公交和其它方式有区别）
+    [self.mapView removeOverlays:self.mapView.overlays];
     
-    MAAnimatedAnnotation *annotation = [[MAAnimatedAnnotation alloc] init];
-    annotation.coordinate = self.mapView.userLocation.coordinate;
-    [self.mapView addAnnotation:annotation];
-//    for (AMapPath *obj in response.route.paths) {
-//        NSLog(@"===距离：%ld",(long)obj.distance);
-        NSMutableArray *overlayArray = [[NSMutableArray alloc] init];
-        for (AMapStep *step in response.route.paths[0].steps) {
-            /*
-             ///行走指示
-             @property (nonatomic, copy)   NSString  *instruction;
-             ///方向
-             @property (nonatomic, copy)   NSString  *orientation;
-             ///道路名称
-             @property (nonatomic, copy)   NSString  *road;
-             ///此路段长度（单位：米）
-             @property (nonatomic, assign) NSInteger  distance;
-             ///此路段预计耗时（单位：秒）
-             @property (nonatomic, assign) NSInteger  duration;
-             ///此路段坐标点串
-             @property (nonatomic, copy)   NSString  *polyline;
-             */
-            NSArray *array = [step.polyline componentsSeparatedByString:@";"];
-            CLLocationCoordinate2D coords[array.count];
-            for (int i = 0; i < array.count; i ++) {
-                NSArray *temp = [[array objectAtIndex:i] componentsSeparatedByString:@","];
-                coords[i].longitude = [temp.firstObject doubleValue];
-                coords[i].latitude  = [temp.lastObject doubleValue];
+    if (self.isBus) {
+        NSLog(@"%@",response.formattedDescription);
+        //公交路线
+        NSArray *transitsArr = response.route.transits;//公交方案
+        
+        for (AMapTransit *transit in transitsArr) {
+            //添加路线信息
+            [[MapRouteView defaultView] addBusRouteView:transit];
+            //
+            NSArray *segmentsArr = transit.segments;//换乘路段
+            for (AMapSegment *segment in segmentsArr) {
+                ///公交换乘路段，如果walking和buslines同时有值，则是先walking后buslines
+                if (segment.walking != nil) {
+                    NSArray *stepsArr = segment.walking.steps;
+                    for (AMapStep *step in stepsArr) {
+                        //坐标串转polyline
+                        MAPolyline *polyline = [self transformFromCoordString:step.polyline];
+                        polyline.title = @"walking";
+                        [self.mapView addOverlay:polyline];
+                    }
+                }
+                
+                if (segment.buslines.count > 0) {
+                    NSArray *busLinesArr = segment.buslines;
+                    for (AMapBusLine *busline in busLinesArr) {
+                        //坐标串转polyline
+                        MAPolyline *polyline = [self transformFromCoordString:busline.polyline];
+                        polyline.title = @"busline";
+                        [self.mapView addOverlay:polyline];
+                    }
+                }
+                
             }
-            MAPolyline *polyline = [MAPolyline polylineWithCoordinates:coords count:array.count];
-            [overlayArray addObject:polyline];
-            
-            
-            [annotation addMoveAnimationWithKeyCoordinates:coords count:array.count withDuration:5.f withName:@"" completeCallback:nil];
+            //暂时只写一条公交路线
+            return;
         }
-        [self.mapView addOverlays:overlayArray];
-//    }
+        return;
+    } else {
+        //添加路线信息
+        [[MapRouteView defaultView] addRouteView:response.route];
+        MAAnimatedAnnotation *annotation = [[MAAnimatedAnnotation alloc] init];
+        annotation.coordinate = self.mapView.userLocation.coordinate;
+        [self.mapView addAnnotation:annotation];
+   
+        for (AMapPath *obj in response.route.paths) {
+                   NSMutableArray *overlayArray = [[NSMutableArray alloc] init];
+            for (AMapStep *step in obj.steps) {
+                MAPolyline *polyline = [self transformFromCoordString:step.polyline];
+                [overlayArray addObject:polyline];
+            }
+            [self.mapView addOverlays:overlayArray];
+        }
+    }
 }
-
+//绘制路线折线
 - (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id<MAOverlay>)overlay {
     if ([overlay isKindOfClass:[MAPolyline class]]) {
         MAPolylineRenderer *polylineRenderer = [[MAPolylineRenderer alloc] initWithPolyline:overlay];
-        polylineRenderer.strokeColor = [UIColor redColor];
+        MAPolyline *polyline = (MAPolyline *)overlay;
+        if ([polyline.title isEqualToString:@"walking"]) {
+            polylineRenderer.strokeColor = [UIColor darkGrayColor];
+            polylineRenderer.lineDash = YES;
+        } else {
+            polylineRenderer.strokeColor = [UIColor redColor];
+        }
         polylineRenderer.lineWidth   = 5.f;
         polylineRenderer.lineJoinType = kMALineJoinRound;
         polylineRenderer.lineCapType  = kMALineCapRound;
         
-        
-        
         return polylineRenderer;
     }
-    
     return nil;
-
 }
-
+//查询失败回调
 - (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error {
-    
+    NSLog(@"Error");
 }
 
 /* 逆地理编码回调. */
@@ -286,17 +364,19 @@
         
         if (poisArray.count > 0) {
             AMapPOI *poi = [poisArray firstObject];
+            //添加标注，在代理中设置标注形式
             MAPointAnnotation *annotation = [[MAPointAnnotation alloc] init];
             CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(poi.location.latitude, poi.location.longitude);
-
             [annotation setCoordinate:coordinate];
             [annotation setTitle:poi.name];
             [self.mapView removeOverlays:self.mapView.overlays];
             [self.mapView addAnnotation:annotation];
             [self.mapView selectAnnotation:annotation animated:YES];
             
+#pragma mark locationShow
+            
             [self.touchView showMapLocationView];
-            [self.touchView setPointInfo:poi];
+            [self.touchView setPointInfo:response.regeocode];
         }
     }
 }
@@ -310,10 +390,8 @@
     [view rotateWithHeading:heading];
     
 }
-
+//设置地图标注点形式 （代理）
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation {
-//    NSLog(@"%@",annotation);
-//    return nil;
     
     if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
         static NSString *pointReuseIndentifier = @"pointReuseIndentifier";
@@ -323,12 +401,7 @@
             annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndentifier];
         }
         annotationView.canShowCallout= YES;       //设置气泡可以弹出，默认为NO
-//        annotationView.animatesDrop = YES;        //设置标注动画显示，默认为NO
-//        annotationView.draggable = YES;        //设置标注可以拖动，默认为NO
-//        annotationView.pinColor = MAPinAnnotationColorPurple;
-        
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        
         return annotationView;
     } else if ([annotation isKindOfClass:[MAAnimatedAnnotation class]]) {
         NSLog(@"MAAnimatedAnnotation");
@@ -390,6 +463,21 @@
     [self.mapView setShowsScale:NO];
 }
 
+
+#pragma mark FUNC
+
+//坐标串转polyline
+- (MAPolyline *)transformFromCoordString:(NSString *)polylineString {
+    NSArray *array = [polylineString componentsSeparatedByString:@";"];
+    CLLocationCoordinate2D coords[array.count];
+    for (int i = 0; i < array.count; i ++) {
+        NSArray *temp = [[array objectAtIndex:i] componentsSeparatedByString:@","];
+        coords[i].longitude = [temp.firstObject doubleValue];
+        coords[i].latitude  = [temp.lastObject doubleValue];
+    }
+    MAPolyline *polyline = [MAPolyline polylineWithCoordinates:coords count:array.count];
+    return polyline;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

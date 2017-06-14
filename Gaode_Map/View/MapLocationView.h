@@ -4,19 +4,18 @@
 //
 //  Created by wheng on 17/6/9.
 //  Copyright © 2017年 admin. All rights reserved.
-//
+//  标注位置
 
 #import "MapModuleSuperView.h"
-#import <AMapSearchKit/AMapSearchKit.h>
 
-typedef void(^RouteBlock)(AMapGeoPoint *);
+typedef void(^RouteBlock)(AMapReGeocode *);
 
 @interface MapLocationView : MapModuleSuperView
 
 @property (nonatomic, copy)RouteBlock block;
-
+//创建view
 + (instancetype)defaultView;
-
-- (void)setPointInfo:(AMapPOI *)poi;
+//添加标注信息
+- (void)setPointInfo:(AMapReGeocode *)regeo;
 
 @end

@@ -10,15 +10,21 @@
 #import "MapModuleSuperView.h"
 
 @implementation MapModuleSuperView
-
+//显示view
 - (void)showMapLocationView {
-    [UIView animateWithDuration:0.4f animations:^{
-        self.y = ScreenHeight * 2 / 3;
-    }];
+    if (self.isShow == NO) {
+        [UIView animateWithDuration:0.4f animations:^{
+            self.y = ScreenHeight * 2 / 3;
+        }];
+        self.isShow = YES;
+    }
 }
-
+//隐藏view
 - (void)dismissMapLocationView {
-    [self hideLocationView];
+    if (self.isShow) {
+        [self hideLocationView];
+        self.isShow = NO;
+    }
 }
 
 - (void)hideLocationView {
@@ -26,7 +32,7 @@
         self.y = ScreenHeight;
     }];
 }
-
+//创建遮盖view
 - (void)createBackGroundView {
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     self.backGroundView = [[UIView alloc] initWithFrame:window.bounds];
@@ -36,7 +42,7 @@
     [self.backGroundView setAlpha:0.f];
 
 }
-
+//创建通用布局
 - (void)createSubViews {
     UIView *touchLine = [[UIView alloc] initWithFrame:CGRectMake(self.center.x - 15, 5, 40, 5)];
     [self addSubview:touchLine];
@@ -60,8 +66,7 @@
     [closeButton addTarget:self action:@selector(dismissMapLocationView) forControlEvents:UIControlEventTouchUpInside];
     [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
 }
-
-
+//设置view模糊
 - (void)addBlurEffect {
     UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
@@ -69,13 +74,14 @@
     
     [self addSubview:effectView];
 }
-
+//添加手势
 - (void)addPanGesture {
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(viewPanGestureAction:)];
     
     [self addGestureRecognizer:pan];
+    self.normalHeight = ScreenHeight * 2 / 3;
 }
-
+//监听布局变化
 - (void)addFrameObserver {
     [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
@@ -126,7 +132,7 @@
                 }];
             } else {
                 [UIView animateWithDuration:0.2f animations:^{
-                    view.y = ScreenHeight * 2 / 3;
+                    view.y = self.normalHeight;
                 }];
             }
             
@@ -136,7 +142,7 @@
     [sender setTranslation:CGPointZero inView:view.superview];
 }
 
-//
+//绘制圆角
 - (void)drawRect:(CGRect)rect {
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(8, 8)];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
